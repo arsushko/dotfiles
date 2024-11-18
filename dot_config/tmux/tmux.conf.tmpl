@@ -105,7 +105,7 @@ unbind-key S-Right
 ################################################################
 
 # Opening new windows
-# bind-key r command-prompt "rename-window '%%'"
+#bind-key r command-prompt "rename-window '%%'"
 unbind-key c
 bind-key c new-window -c "#{pane_current_path}"
 bind-key C new-window
@@ -121,12 +121,11 @@ bind-key w killw
 
 ################################################################
 # Copy Mode
-# TODO: Movement doesn't work
 ################################################################
 
 # Unbind-key copy mode bindings
-# unbind-key -T copy-mode-vi Space;
-# unbind-key -T copy-mode-vi Enter;
+#unbind-key -T copy-mode-vi Space;
+#unbind-key -T copy-mode-vi Enter;
 
 # Vim-like copy mode movement
 bind-key -T copy-mode-vi n send-keys -X cursor-left
@@ -134,10 +133,18 @@ bind-key -T copy-mode-vi e send-keys -X cursor-down
 bind-key -T copy-mode-vi i send-keys -X cursor-up
 bind-key -T copy-mode-vi o send-keys -X cursor-right
 
-bind-key -T copy-mode-vi 'v' send-keys -X begin-selection
-bind-key -T copy-mode-vi 'C-v' send-keys -X rectangle-toggle #TODO: Broken
-bind-key -T copy-mode-vi 'y' send-keys -X copy-selection
+# Upper case E/I scroll down/up whole page
+bind-key -T copy-mode-vi E send-keys -X page-down
+bind-key -T copy-mode-vi I send-keys -X page-up
 
+# k for searching forward/backward
+bind-key -T copy-mode-vi k send-keys -X search-again
+bind-key -T copy-mode-vi K send-keys -X search-reverse
+
+# Selection with v and block select with Ctrl + v, yank with y
+bind-key -T copy-mode-vi 'v' send-keys -X begin-selection
+bind-key -T copy-mode-vi 'C-v' send -X begin-selection \; send -X rectangle-toggle
+bind-key -T copy-mode-vi 'y' send-keys -X copy-selection
 
 set -g @catppuccin_status_modules_right "user host session"
 set -g @catppuccin_window_right_separator "█ "
