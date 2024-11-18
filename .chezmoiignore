@@ -39,6 +39,7 @@ pics/
 
 {{ if ne .sway true }}
 .config/mimeapps.list
+.config/user-dirs.dirs
 .config/fontconfig/
 .config/fuzzel/
 .config/sway/
