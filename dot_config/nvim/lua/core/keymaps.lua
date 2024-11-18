@@ -66,12 +66,16 @@ map("", "H", "O")
 map("", "E", "<C-f>")
 map("", "I", "<C-b>")
 
--- Lower case j joins lines
-map("", "j", "J")
+-- - joins lines
+map("", "-", "J")
 
 -- Movement between previous motions
 map("", "<C-H>",   "<C-O>")
 map("", "<C-S-H>", "<C-I>")
+
+-- j moves to end of word
+map("", "j",  "e")
+map("", "J",  "E")
 
 ---------------------------------------------------------------
 -- Custom mappings
