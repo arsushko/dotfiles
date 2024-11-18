@@ -9,4 +9,4 @@
 
 https://github.com/twpayne/chezmoi/issues/1410#issuecomment-934973882
 
-`ssh -t user@remote.machine 'sh <(curl -fsSL git.io/chezmoi) -- init --one-shot reponame'
+`ssh -t user@remote.machine 'sh <(curl -fsSL git.io/chezmoi) -- init --one-shot reponame`
