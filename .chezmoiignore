@@ -13,11 +13,14 @@ SOFTWARE.md
 {{ if eq .shell "zsh" }}
 .config/fish
 .bashrc
+.bash_profile
 {{ else if eq .shell "fish" }}
 .config/zsh
+.zshenv
 {{ else }}
-.config/fish
 .config/zsh
+.zshenv
+.config/fish
 {{ end }}
 
 {{ if ne .nvimplugins true }}
