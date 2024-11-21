@@ -1,4 +1,4 @@
-# Load .bashrc if it exists
-if [ -f "$HOME/.bashrc" ]; then
-    . "$HOME/.bashrc"
+if [[ $- == *i* ]] && [ -f "$HOME/.bashrc" ]; then
+    # Commands to execute if both conditions are true
+    source "$HOME/.bashrc"
 fi
