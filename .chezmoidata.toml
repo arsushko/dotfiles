@@ -7,11 +7,13 @@ colemak = true
 # Which shell to use (bash, zsh, or fish)
 shell = "bash"
 # Whether to enable zsh completion
-zshcomp = true
+zshcomp = false
 # Whether to enable zsh abbeviations
-zshabbr = true
+zshabbr = false
 
 # Whether to automatically start tmux with zsh
+# NOTE: When setting this option you should also set sudo to forward the $TMUX
+# environmental variable when starting an interactive shell.
 tmux = false
 
 # Which EDITOR to use
