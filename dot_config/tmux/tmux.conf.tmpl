@@ -13,7 +13,7 @@ bind-key M-t send-prefix
 set-option -g default-terminal "tmux-256color"
 set -sg terminal-overrides ",*:RGB"
 
-{{ if eq .fish true }}
+{{ if eq .shell "fish" }}
 set-option -g default-shell "/bin/fish"
 {{ end }}
 

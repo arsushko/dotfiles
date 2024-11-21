@@ -10,6 +10,16 @@ SOFTWARE.md
 .config/nvim
 {{ end }}
 
+{{ if eq .shell "zsh" }}
+.config/fish
+.bashrc
+{{ else if eq .shell "fish" }}
+.config/zsh
+{{ else }}
+.config/fish
+.config/zsh
+{{ end }}
+
 {{ if ne .nvimplugins true }}
 .config/nvim/lua/plugins
 .config/nvim/lua/lazy-setup.lua
