@@ -29,7 +29,7 @@ termfont = "0xProto Nerd Font Mono"
 # Font to use for desktop
 deskfont = "CodeNewRoman Nerd Font Mono"
 # Font to use for everything else
-normfont = "Questrial"
+normfont = "Cantarell"
 
 # Whether to use a desktop
 graphical = false
