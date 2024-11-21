@@ -10,9 +10,10 @@ function fish_prompt
 end
 
 function start_tmux
-    if type -q tmux; and not set -q TMUX
-        tmux attach || tmux new-session
-    end
+    # Tmux should be handled by bash now; don't start it again
+    #if type -q tmux; and not set -q TMUX
+    #    tmux attach || tmux new-session
+    #end
 end
 
 if status is-interactive
