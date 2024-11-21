@@ -3,7 +3,15 @@
 # launched.
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [ -z "$TMUX" ]; then
     tmux list-sessions || exec tmux new-session && exec tmux attach
+
+    {{ if eq .shell "fish }}
+        else
+            # Start fish
+            [ -x /bin/fish ] && SHELL=/bin/fish exec fish
+    {{ end }}
 fi
+{{ end }}
+
 {{ else if eq .shell "fish" }}
 # Start fish
 [ -x /bin/fish ] && SHELL=/bin/fish exec fish
