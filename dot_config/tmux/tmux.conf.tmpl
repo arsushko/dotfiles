@@ -124,9 +124,12 @@ bind-key w killw
 # Copy Mode
 ################################################################
 
+# Sets copy mode to use vi keybinds
+setw -g mode-keys vi
+
 # Unbind-key copy mode bindings
-#unbind-key -T copy-mode-vi Space;
-#unbind-key -T copy-mode-vi Enter;
+unbind-key -T copy-mode-vi Space;
+unbind-key -T copy-mode-vi Enter;
 
 # Vim-like copy mode movement
 bind-key -T copy-mode-vi n send-keys -X cursor-left
