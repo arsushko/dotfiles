@@ -6,8 +6,8 @@
 
 # Rebinding prefix to Alt + t
 unbind-key C-b
-set-option -g prefix M-t
-bind-key M-t send-prefix
+set-option -g prefix C-t
+bind-key C-t send-prefix
 
 # Set $TERM
 set-option -g default-terminal "tmux-256color"
@@ -53,7 +53,8 @@ bind-key M-t send-prefix
 
 # Reloads tmux config
 unbind-key r
-bind-key r source-file $XDG_CONFIG_HOME/tmux/tmux.conf \; display "Reloaded tmux.conf"
+#bind-key r source-file $XDG_CONFIG_HOME/tmux/tmux.conf \; display "Reloaded tmux.conf"
+bind-key r source-file $HOME/.config/tmux/tmux.conf \; display "Reloaded tmux.conf"
 
 ################################################################
 # Panes
