@@ -204,7 +204,11 @@ noremap k o
 noremap K O
 
 " Lower case j joins lines
-noremap j J
+noremap - J
+
+" j moves to end of word
+noremap j e
+noremap J E
 
 " Hack to work around conflict with `d`elete `i`n
 nnoremap di dk
