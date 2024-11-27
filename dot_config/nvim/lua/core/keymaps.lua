@@ -81,11 +81,13 @@ map("", "J",  "E")
 -- Custom mappings
 ---------------------------------------------------------------
 
+-- Make Y consistent with D and C to the end of line
+nnoremap Y y$
 
 -- Leader-action to delete without copying
 map("",  "<leader>x", "\"_x")
 map("",  "<leader>X", "\"_X")
-map("v",  "<leader>x", "\"_x")
+map("v", "<leader>x", "\"_x")
 
 map("",  "<leader>s", "\"_s")
 map("",  "<leader>S", "\"_S")

@@ -236,6 +236,9 @@ noremap <C-S-H> <C-I>
 " Custom mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" Make Y consistent with D and C to the end of line
+nnoremap Y y$
+
 " W and B move to beginning/end of word inclusive
 noremap W e
 noremap B gE
