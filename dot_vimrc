@@ -188,20 +188,20 @@ noremap l i
 noremap L I
 noremap gl gi
 
-" Search result navigation with h
-noremap h n
-noremap H N
+" Search result navigation with k
+noremap k n
+noremap K N
 " Search forward/backward and select
-noremap gh gn
-noremap gH gN
+noremap gk gn
+noremap gK gN
 noremap gn <nop>
 noremap gN <nop>
 noremap go <nop>
 noremap gO <nop>
 
-" Insert mode with newline is now on k
-noremap k o
-noremap K O
+" Insert mode with newline is now on h
+noremap h o
+noremap H O
 
 " Lower case j joins lines
 noremap - J
