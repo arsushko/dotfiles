@@ -82,7 +82,7 @@ map("", "J",  "E")
 ---------------------------------------------------------------
 
 -- Make Y consistent with D and C to the end of line
-nnoremap Y y$
+map("",  "Y", "y")
 
 -- Leader-action to delete without copying
 map("",  "<leader>x", "\"_x")
