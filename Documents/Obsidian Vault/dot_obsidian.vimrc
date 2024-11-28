@@ -70,14 +70,6 @@ noremap <Down> <nop>
 noremap <Up> <nop>
 noremap <Right> <nop>
 
-inoremap <Left> <nop>
-inoremap <Down> <nop>
-inoremap <Up> <nop>
-inoremap <Right> <nop>
-
-" Disables Ctrl + w in insert mode
-inoremap <C-w> <nop>
-
 " Obsidian edits
 " Source: https://www.reddit.com/r/ObsidianMD/comments/16b3fxn/opening_link_under_cursor_with_obsidian_vimrc/
 " Sets Enter to follow links
