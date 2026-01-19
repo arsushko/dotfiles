@@ -19,6 +19,8 @@ tmux = false
 # Which EDITOR to use
 editor = "nvim"
 
+# What app should be used for PAGER (less or moor)
+pager = "moor"
 # What app should be used for MANPAGER (less, most, or nvim)
 manpager = "less"
 

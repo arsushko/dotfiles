@@ -38,6 +38,12 @@ function basic_settings
 
     bind \cq backward-kill-bigword
 
+    {{ if (eq .pager "moor") }}
+    set PAGER 'moor'
+    {{ else }}
+    set PAGER 'less'
+    {{ end }}
+
     {{ if (eq .manpager "nvim") }}
     set MANPAGER 'nvim +Man!'
     {{ else if (eq .manpager "manpager") }}
