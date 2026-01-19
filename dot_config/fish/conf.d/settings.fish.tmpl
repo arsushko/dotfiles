@@ -40,6 +40,8 @@ function basic_settings
 
     {{ if (eq .manpager "nvim") }}
     set MANPAGER 'nvim +Man!'
+    {{ else if (eq .manpager "manpager") }}
+    set MANPAGER 'manpager'
     {{ else }}
     set MANPAGER 'less -ix8RmPm'
     {{ end }}
