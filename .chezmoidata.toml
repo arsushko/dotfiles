@@ -20,7 +20,7 @@ tmux = false
 editor = "nvim"
 
 # What app should be used for PAGER (less or moor)
-pager = "moor"
+pager = "less"
 # What app should be used for MANPAGER (less, most, or nvim)
 manpager = "less"
 
