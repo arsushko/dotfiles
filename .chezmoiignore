@@ -42,7 +42,7 @@ SOFTWARE.md
 .config/zsh/modules/completion.zsh
 {{ end }}
 
-{{ if ne .graphical true }}
+{{ if ne .desktop true }}
 .config/zathura/
 .local/share/applications/
 pics/
