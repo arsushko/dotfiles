@@ -114,7 +114,7 @@ map h search-next
 map H search-next
 #{ end }}
 
-set previewer "/home/aleksei/.config/lf/bat-preview.sh"
+set previewer "/home/aleksei/.config/lf/preview.sh"
 
 # Creates a new file and opens it in editor
 cmd newfile ${{
