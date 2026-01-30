@@ -34,7 +34,6 @@ README.md
 {{ if ne .graphical true }}
 .config/zathura/
 .local/share/applications/
-pics/
 .config/mimeapps.list
 .config/fontconfig
 {{ end }}
