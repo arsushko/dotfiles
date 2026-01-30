@@ -22,7 +22,7 @@ editor = "nvim"
 
 # What app should be used for PAGER (less or moor)
 pager = "less"
-# What app should be used for MANPAGER (less, most, or nvim)
+# What app should be used for MANPAGER (less, manpager, or nvim)
 manpager = "less"
 
 # Whether to download my preferred fonts

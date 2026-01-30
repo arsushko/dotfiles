@@ -221,6 +221,8 @@ export LESS='-ix8RmPm'
 # TODO: Use nvimpager?
 {{ if (eq .manpager "nvim") }}
 export MANPAGER='nvim +Man!'
+{{ else if (eq .manpager "manpager") }}
+export MANPAGER='manpager'
 {{ else }}
 export MANPAGER='less -ix8RmPm'
 {{ end }}
