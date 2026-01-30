@@ -9,17 +9,7 @@ function fish_prompt
     end
 end
 
-function start_tmux
-    # Tmux should be handled by bash now; don't start it again
-    #if type -q tmux; and not set -q TMUX
-    #    tmux attach || tmux new-session
-    #end
-end
-
 if status is-interactive
-    {{ if eq .tmux true }}
-    start_tmux
-    {{ end }}
     source $HOME/.local/bin/lscolors.sh
 
     basic_settings

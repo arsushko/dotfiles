@@ -1,18 +1,60 @@
-{{ if eq .tmux true }}
-    # Opens in tmux, provided tmux is installed and is not already
-    # launched.
-    if command -v tmux &> /dev/null && [ -n "$PS1" ] && [ -z "$TMUX" ]; then
-        tmux list-sessions || exec tmux new-session && exec tmux attach
+# This file is non-trivial to understand. Please read before modifying.
+#
+# There are two non-obvious things:
+# 1. If we want to use fish as an interactive shell, we have to set bash as
+#    SHELL system-wide and then use .bashrc to start fish. This is because fish
+#    is not POSIX compliant and will break things if it's set system-wide. In
+#    other words, your $SHELL should be bash, not fish.
+# 2. If we are using a multiplexer, the easiest way to start fish is by
+#    specifying it inside the multiplexer's config. In other words, .bashrc
+#    starts tmux and tmux then starts fish through default_shell.
+#
+# This is the cleanest way to do it.
+#
+# Here's how the logic actually flows:
+#
+# if this is interactive sission
+#     if tmux is set in chezmoidata
+#         if tmux can be safely run
+#             run tmux
+#
+#     else if zellij is set in chezmoidata
+#         if zellij can be safely run
+#             run zellij
+#
+#     if fish is set in chezmoi data and none of the above ran
+#         run fish
+# else
+#     just start bash
 
-        {{ if eq .shell "fish" }}
-            else
-                # Start fish
-                [ -x /bin/fish ] && SHELL=/bin/fish exec fish
-        {{ end }}
+# This checks whether the shell session is interactive. Not strictly necessary,
+# since .bashrc isn't run on non-interactive sessions. However, it's good to
+# have just in case.
+if [ -n "$PS1" ]; then
+
+    {{ if eq .tmux true }}
+    # First, check in case tmux is not installed or already running.
+    if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+        tmux list-sessions || exec tmux new-session && exec tmux attach
+    # In the event tmux is not installed, and fish is enabled, just run fish.
+    # In the event tmux is installed and running, this should never run (since
+    # .bashrc is never invoked). 
     fi
 
-{{ else if eq .shell "fish" }}
+    # Same as tmux, but for zellij
+    {{ else if eq .zellij true }}
+    if command -v zellij &> /dev/null && [ -z "$ZELLIJ" ]; then
+        exec zellij attach || exec zellij
+    fi
+    {{ end }}
+
+    {{ if eq .shell "fish" }}
+    # If neither multiplexer is installed and fish is enabled, start fish.
+    #
+    # Note: it may appear that this part will, after zellij exits, drop you into
+    # fish. However, since exec replaces the current process, .bashrc exits and
+    # this part will not run.
     # Start fish
     [ -x /bin/fish ] && SHELL=/bin/fish exec fish
-{{ end }}
-
+    {{ end }}
+fi

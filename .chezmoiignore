@@ -1,5 +1,4 @@
 README.md
-SOFTWARE.md
 
 {{ if eq .editor "nvim" }}
 .vimrc
@@ -28,21 +27,11 @@ SOFTWARE.md
 .config/nvim/lua/lazy-setup.lua
 {{ end }}
 
-{{ if ne .term "alacritty" }}
-.config/alacritty/
-{{ end }}
-{{ if ne .term "kitty" }}
-.config/kitty/
-{{ end }}
-{{ if ne .term "foot" }}
-.config/foot/
-{{ end }}
-
 {{ if ne .zshcomp true }}
 .config/zsh/modules/completion.zsh
 {{ end }}
 
-{{ if ne .desktop true }}
+{{ if ne .graphical true }}
 .config/zathura/
 .local/share/applications/
 pics/

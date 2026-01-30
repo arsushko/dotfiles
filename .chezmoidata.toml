@@ -1,7 +1,7 @@
 # Whether to install zsh and neovim plugins
 nvimplugins = false
 zshplugins = false
-# Whether to import colemak rebinds
+# Whether to enable colemak rebinds
 colemak = true
 
 # Which shell to use (bash, zsh, or fish)
@@ -11,12 +11,13 @@ zshcomp = false
 # Whether to enable zsh abbeviations
 zshabbr = false
 
-# Whether to automatically start tmux with zsh
-# NOTE: When setting this option you should also set sudo to forward $TMUX
-# when starting an interactive shell.
+# Whether to automatically start tmux or zellij. DO NOT SET BOTH TO TRUE
+# NOTE: When setting this option you should also set sudo to forward the $TMUX
+# environmental variable when starting an interactive shell.
 tmux = false
+zellij = true
 
-# Which EDITOR to use (does nothing if given binary not in $PATH)
+# Which EDITOR to use
 editor = "nvim"
 
 # What app should be used for PAGER (less or moor)
@@ -35,9 +36,9 @@ deskfont = "CodeNewRoman Nerd Font Mono"
 # Font to use for everything else
 normfont = "Cantarell"
 
-# Whether to import config files for desktop apps
-desktop = false
+# Whether to use a desktop
+graphical = false
 # Whether to use sway
 sway = false
 # Which terminal emulator to use
-term = ""
+term = "foot"
