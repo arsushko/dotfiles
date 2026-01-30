@@ -44,7 +44,7 @@ if [ -n "$PS1" ]; then
     # Same as tmux, but for zellij
     {{ else if eq .zellij true }}
     if command -v zellij &> /dev/null && [ -z "$ZELLIJ" ]; then
-        exec zellij attach --index 0 || exec zellij
+        exec zellij attach --create --index 0
     fi
     {{ end }}
 
