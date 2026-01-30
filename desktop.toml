@@ -1,0 +1,7 @@
+# Copy me to ~/.config/chezmoi/chezmoi.toml
+[data]
+nvimplugins = true
+shell = "fish"
+manpager = "manpager"
+fonts = true
+graphical = true
