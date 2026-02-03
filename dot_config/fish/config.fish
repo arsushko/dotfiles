@@ -1,11 +1,12 @@
 # vim: ft=fish
 
-# TODO: Set the color based on whether command failed
 function fish_prompt
+    set -l last_status $status
+
     if test $EUID -eq 0
-        string join '' -- (set_color red) '[' (set_color magenta) (prompt_pwd) (set_color red) '] '(set_color normal)
+        string join '' -- (set_color red) '[' (set_color magenta) (prompt_pwd) (test $last_status -ne 0; and string join '' (set_color red) ' !' $last_status) (set_color red) '] '(set_color normal)
     else
-        string join '' -- (set_color blue) '[' (set_color green) (prompt_pwd) (set_color normal) (fish_git_prompt) (set_color blue) '] '(set_color normal)
+        string join '' -- (set_color blue) '[' (set_color green) (prompt_pwd) (set_color normal) (fish_git_prompt) (test $last_status -ne 0; and string join '' (set_color red) ' !' $last_status) (set_color blue) '] '(set_color normal)
     end
 end
 
