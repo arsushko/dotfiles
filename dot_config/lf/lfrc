@@ -42,8 +42,8 @@ map E page-down
 map I page-up
 #{ else }}
 ## Moves up and down a whole page
-map J page-down
-map K page-up
+#map J page-down
+#map K page-up
 #{ end }}
 
 #gg moves to top of directory
@@ -62,7 +62,8 @@ map lp chmod
 #{ if (eq .colemak true) }}
 # File manipulation
 ## Opens file in EDITOR
-map k $$EDITOR "$f"
+map h $$EDITOR "$f"
+map H $$PAGER "$f"
 #{ end }}
 
 map r rename
@@ -110,8 +111,8 @@ map B glob-unselect
 
 #{ if (eq .colemak true) }}
 ## Search
-map h search-next
-map H search-next
+map k search-next
+map K search-next
 #{ end }}
 
 set previewer "/home/aleksei/.config/lf/preview.sh"
