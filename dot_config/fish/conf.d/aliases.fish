@@ -17,15 +17,4 @@ function configure_aliases
 
     # Dotfile configuration
     abbr -a chez chezmoi
-
-    if type -q task
-        abbr -a t task
-        abbr -a ta task add
-    end
-
-    if type -q buku
-        abbr -a b buku
-        abbr -a ba buku --add
-        abbr -a buku-backup buku -e ~/.local/share/buku/bookmarks.md
-    end
 end
