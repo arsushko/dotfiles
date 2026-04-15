@@ -19,6 +19,8 @@ case "$mime_type" in
         chafa --format=symbols --size="${2}x${3}" "$1";;
     video/*|audio/*)
         mediainfo "$1";;
+    application/pdf)
+        pdfinfo "$1";;
     text/*|application/json|application/xml|application/javascript)
         bat --color=always "$1";;
     *)
