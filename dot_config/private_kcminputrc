@@ -1,0 +1,12 @@
+[Keyboard]
+RepeatDelay=250
+
+[Libinput][1267][12693][ELAN0678:00 04F3:3195 Touchpad]
+NaturalScroll=true
+PointerAcceleration=0.600
+ScrollFactor=9
+
+[Libinput][1739][52839][SYNA8022:00 06CB:CE67 Touchpad]
+NaturalScroll=true
+PointerAcceleration=0.600
+ScrollFactor=4

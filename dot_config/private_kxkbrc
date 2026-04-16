@@ -1,0 +1,8 @@
+[Layout]
+LayoutList=us
+Options=caps:escape
+ResetOldOptions=true
+Use=true
+VariantList=colemak_dh
+DisplayNames=
+
