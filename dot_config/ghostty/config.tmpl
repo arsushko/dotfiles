@@ -1,0 +1,100 @@
+# Font
+font-family = "0xProto Nerd Font Mono"
+font-size = 12
+
+# Word selection boundaries
+selection-word-chars = "*?-.[]~:;!#$%^(){}<>"
+
+# Scrollback
+scrollback-limit = 5000000
+
+# Window decorations
+window-decoration = false
+
+# Cursor
+cursor-style = bar
+cursor-style-blink = false
+
+# Mouse
+mouse-hide-while-typing = true
+
+# Background opacity
+background-opacity = 0.98
+
+# Colors
+foreground = #C5C8C6
+background = #0A0A10
+
+palette = 0=#282A2E
+palette = 1=#A54242
+palette = 2=#8C9440
+palette = 3=#DE935F
+palette = 4=#5F819D
+palette = 5=#85678F
+palette = 6=#5E8D87
+palette = 7=#707880
+palette = 8=#373B41
+palette = 9=#CC6666
+palette = 10=#B5BD68
+palette = 11=#F0C674
+palette = 12=#81A2BE
+palette = 13=#B294BB
+palette = 14=#8ABEB7
+palette = 15=#C5C8C6
+
+# Disable multiplexing
+keybind = ctrl+shift+tab=unbind
+keybind = ctrl+tab=unbind
+keybind = ctrl+shift+t=unbind
+keybind = ctrl+shift+arrow_left=unbind
+keybind = ctrl+shift+arrow_right=unbind
+keybind = ctrl+page_up=unbind
+keybind = ctrl+page_down=unbind
+keybind = ctrl+shift+n=unbind
+keybind = ctrl+shift+e=unbind
+keybind = ctrl+shift+i=unbind
+keybind = ctrl+shift+o=unbind
+keybind = super+ctrl+[=unbind
+keybind = super+ctrl+]=unbind
+keybind = ctrl+alt+arrow_up=unbind
+keybind = ctrl+alt+arrow_down=unbind
+keybind = ctrl+alt+arrow_left=unbind
+keybind = ctrl+alt+arrow_right=unbind
+keybind = super+ctrl+shift+arrow_up=unbind
+keybind = super+ctrl+shift+arrow_down=unbind
+keybind = super+ctrl+shift+arrow_left=unbind
+keybind = super+ctrl+shift+arrow_right=unbind
+keybind = alt+digit_1=unbind
+keybind = alt+1=unbind
+keybind = alt+digit_2=unbind
+keybind = alt+2=unbind
+keybind = alt+digit_3=unbind
+keybind = alt+3=unbind
+keybind = alt+digit_4=unbind
+keybind = alt+4=unbind
+keybind = alt+digit_5=unbind
+keybind = alt+5=unbind
+keybind = alt+digit_6=unbind
+keybind = alt+6=unbind
+keybind = alt+digit_7=unbind
+keybind = alt+7=unbind
+keybind = alt+digit_8=unbind
+keybind = alt+8=unbind
+keybind = alt+9=unbind
+keybind = ctrl+shift+enter=unbind
+
+{{ if (eq .colemak true) }}
+# Keybinds
+# Cursor left (\x1b[D)
+keybind = ctrl+n=csi:D
+# Cursor down (\x1b[B)
+keybind = ctrl+e=csi:B
+# Cursor up (\x1b[A)
+keybind = ctrl+i=csi:A
+# Cursor right (\x1b[C)
+keybind = ctrl+o=csi:C
+{{ end }}
+# Ctrl-A, start of line (\x01)
+keybind = ctrl+left_bracket=text:\x01
+# Ctrl-E, end of line (\x05)
+keybind = ctrl+right_bracket=text:\x05
