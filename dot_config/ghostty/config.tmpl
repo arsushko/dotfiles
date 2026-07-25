@@ -1,3 +1,7 @@
+notify-on-command-finish = unfocused
+shell-integration = fish
+shell-integration-features = ssh-env,ssh-terminfo
+
 # Font
 font-family = "0xProto Nerd Font Mono"
 font-size = 12
@@ -93,6 +97,8 @@ keybind = ctrl+e=csi:B
 keybind = ctrl+i=csi:A
 # Cursor right (\x1b[C)
 keybind = ctrl+o=csi:C
+keybind = ctrl+shift+n=esc:b
+keybind = ctrl+shift+o=esc:f
 {{ end }}
 # Ctrl-A, start of line (\x01)
 keybind = ctrl+left_bracket=text:\x01
