@@ -2,6 +2,7 @@
 [data]
 nvimplugins = true
 shell = "fish"
+prompthost = true
 manpager = "manpager"
 fonts = true
 graphical = true

@@ -3,6 +3,7 @@
 #
 #   host:[dir:branch !status]
 #
+# The host segment is controlled by the prompthost option in .chezmoidata.toml.
 # Root gets a red/magenta frame and no git info; everyone else gets blue/green.
 function fish_prompt
     # Must be captured first; any other command overwrites $status.
@@ -17,7 +18,9 @@ function fish_prompt
         set is_root true
     end
 
+    {{ if .prompthost }}
     _prompt_host
+    {{ end }}
 
     set_color $frame_color
     echo -n '['

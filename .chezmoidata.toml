@@ -11,6 +11,9 @@ zshcomp = false
 # Whether to enable zsh abbeviations
 zshabbr = false
 
+# Whether to show the hostname in the fish prompt
+prompthost = true
+
 # Whether to automatically start tmux or zellij. DO NOT SET BOTH TO TRUE
 # NOTE: When setting this option you should also set sudo to forward the $TMUX
 # environmental variable when starting an interactive shell.
