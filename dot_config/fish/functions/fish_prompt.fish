@@ -1,0 +1,36 @@
+# The prompt is built from small segment functions (_prompt_*), each of which
+# prints its own colors and resets them afterwards. Layout:
+#
+#   host:[dir:branch !status]
+#
+# Root gets a red/magenta frame and no git info; everyone else gets blue/green.
+function fish_prompt
+    # Must be captured first; any other command overwrites $status.
+    set -l last_status $status
+
+    set -l frame_color blue
+    set -l path_color green
+    set -l is_root false
+    if test $EUID -eq 0
+        set frame_color red
+        set path_color magenta
+        set is_root true
+    end
+
+    _prompt_host
+
+    set_color $frame_color
+    echo -n '['
+    set_color $path_color
+    echo -n (prompt_pwd)
+    set_color normal
+
+    # Root shouldn't be poking at git repositories.
+    $is_root; or _prompt_git
+
+    _prompt_status $last_status
+
+    set_color $frame_color
+    echo -n '] '
+    set_color normal
+end
