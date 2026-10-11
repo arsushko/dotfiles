@@ -37,18 +37,6 @@ desktop.toml
 .local/share/applications/
 .config/mimeapps.list
 .config/fontconfig
-.config/kdeglobals
-.config/kwinrc
-.config/plasma-org.kde.plasma.desktop-appletsrc
-.config/plasmashellrc
-.config/kglobalshortcutsrc
-.config/kscreenlockerrc
-.config/ksmserverrc
-.config/kcminputrc
-.config/kxkbrc
-.local/share/plasma/
-.config/fcitx5/
-.local/share/fcitx5/
 {{ end }}
 
 {{ if ne .sway true }}
