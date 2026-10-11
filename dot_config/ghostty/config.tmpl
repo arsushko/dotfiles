@@ -88,17 +88,18 @@ keybind = alt+9=unbind
 keybind = ctrl+shift+enter=unbind
 
 {{ if (eq .colemak true) }}
+{{- $k := includeTemplate "dirkeys.json" . | fromJson }}
 # Keybinds
 # Cursor left (\x1b[D)
-keybind = ctrl+n=csi:D
+keybind = ctrl+{{ $k.left }}=csi:D
 # Cursor down (\x1b[B)
-keybind = ctrl+e=csi:B
+keybind = ctrl+{{ $k.down }}=csi:B
 # Cursor up (\x1b[A)
-keybind = ctrl+i=csi:A
+keybind = ctrl+{{ $k.up }}=csi:A
 # Cursor right (\x1b[C)
-keybind = ctrl+o=csi:C
-keybind = ctrl+shift+n=esc:b
-keybind = ctrl+shift+o=esc:f
+keybind = ctrl+{{ $k.right }}=csi:C
+keybind = ctrl+shift+{{ $k.left }}=esc:b
+keybind = ctrl+shift+{{ $k.right }}=esc:f
 {{ end }}
 # Ctrl-A, start of line (\x01)
 keybind = ctrl+left_bracket=text:\x01

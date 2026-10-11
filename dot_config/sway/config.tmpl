@@ -12,17 +12,11 @@
 set $mod Mod4
 
 ## Home row direction keys, like vim
-{{ if (eq .colemak true) }}
-set $left n
-set $down e
-set $up i
-set $right o
-{{ else }}
-set $left j
-set $down k
-set $up l
-set $right ;
-{{ end }}
+{{- $k := includeTemplate "dirkeys.json" . | fromJson }}
+set $left {{ $k.left }}
+set $down {{ $k.down }}
+set $up {{ $k.up }}
+set $right {{ $k.right }}
 
 ## Preferred terminal emulator
 {{ if (eq .term "alacritty")}}

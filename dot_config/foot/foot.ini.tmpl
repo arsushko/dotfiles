@@ -84,14 +84,15 @@ delete-prev-word=Control+w
 
 [text-bindings]
 {{ if (eq .colemak true) }}
+{{- $k := includeTemplate "dirkeys.json" . | fromJson }}
 # Move by character
-\x1b[D=Control+n
-\x1b[B=Control+e
-\x1b[A=Control+i
-\x1b[C=Control+o
+\x1b[D=Control+{{ $k.left }}
+\x1b[B=Control+{{ $k.down }}
+\x1b[A=Control+{{ $k.up }}
+\x1b[C=Control+{{ $k.right }}
 # Move by word
-\x1b\x62=Control+Shift+n
-\x1b\x66=Control+Shift+o
+\x1b\x62=Control+Shift+{{ $k.left }}
+\x1b\x66=Control+Shift+{{ $k.right }}
 {{ end }}
 # Move to beginning/end of line with Ctrl+bracket
 \x01=Control+bracketleft

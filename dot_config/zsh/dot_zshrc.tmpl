@@ -21,11 +21,12 @@ source $ZDOTDIR/modules/completion.zsh
 bindkey -e
 
 {{ if (eq .colemak true) }}
+{{- $k := includeTemplate "dirkeys.json" . | fromJson }}
 # Gives tab selection vim navigation
-bindkey -M menuselect 'n' vi-backward-char
-bindkey -M menuselect 'e' vi-down-line-or-history
-bindkey -M menuselect 'i' vi-up-line-or-history
-bindkey -M menuselect 'o' vi-forward-char
+bindkey -M menuselect '{{ $k.left }}' vi-backward-char
+bindkey -M menuselect '{{ $k.down }}' vi-down-line-or-history
+bindkey -M menuselect '{{ $k.up }}' vi-up-line-or-history
+bindkey -M menuselect '{{ $k.right }}' vi-forward-char
 {{ end }}
 
 # Edit command in vim with Ctrl + x
@@ -70,28 +71,12 @@ source $ZDOTDIR/modules/abbreviations.zsh
 # Don't break terminal when pressing Ctrl + s
 stty ixon
 
-{{ if .editor }}
-if command -v {{ .editor }} &> /dev/null; then
-    export EDITOR={{ .editor }}
-fi
-{{ end }}
+# EDITOR, PAGER, less, bat, delta, pass, cargo and zoxide configuration.
+# Shared with fish, see .chezmoitemplates/shellenv
+{{ template "shellenv" (merge (dict "syntax" "zsh") .) }}
 
 # Enable colors
 autoload -U colors && colors
-
-# bat configuration
-export BAT_STYLE='plain'
-
-# delta configuration
-export DELTA_PAGER='less -R'
-
-# pass configuration
-export GPG_TTY=$(tty)
-export PASSWORD_STORE_DIR=$XDG_DATA_HOME/pass
-export GNUPGHOME="$XDG_CONFIG_HOME"/gnupg
-
-# Cargo automatically installs to .local/bin
-export CARGO_INSTALL_ROOT=$HOME/.local
 
 # Includes some characters as parts of words for Ctrl + w
 local WORDCHARS=-$'*?.[]~;!#$%^(){}<>'
@@ -102,9 +87,6 @@ alias wget="wget --hsts-file $XDG_STATE_HOME/wget-hsts"
 # Initializes zoxide
 if command -v zoxide &> /dev/null; then
     eval "$(zoxide init zsh)"
-    # Excludes files from zoxide completion
-    export _ZO_EXCLUDE_DIRS=$HOME:$XDG_CACHE_HOME/*:$ZDOTDIR/plugins/*:$HOME/.mozilla/:*/.git/
-    export _ZO_DATA_DIR="$XDG_STATE_HOME/zoxide"
 fi
 
 ################################################################
@@ -202,29 +184,6 @@ if command -v buku &> /dev/null; then
     abbrev ba='buku --add'
     abbrev buku-backup='buku -e ~/.local/share/buku/bookmarks.md'
 fi
-{{ end }}
-
-################################################################
-# less configuration
-################################################################
-
-# Sets less keybindings file.
-export LESSKEYIN="$XDG_CONFIG_HOME/lesskey"
-
-# Disables less history
-export LESSHISTFILE=-
-
-# Enable less color support
-export LESS='-ix8RmPm'
-
-# Sets pager for man
-# TODO: Use nvimpager?
-{{ if (eq .manpager "nvim") }}
-export MANPAGER='nvim +Man!'
-{{ else if (eq .manpager "manpager") }}
-export MANPAGER='manpager'
-{{ else }}
-export MANPAGER='less -ix8RmPm'
 {{ end }}
 
 ################################################################

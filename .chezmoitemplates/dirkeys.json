@@ -1,0 +1,10 @@
+{{- /*
+Home row direction keys as JSON. Use as:
+  {{ $k := includeTemplate "dirkeys.json" . | fromJson }}
+  {{ $k.left }} {{ $k.down }} {{ $k.up }} {{ $k.right }}
+*/ -}}
+{{- if .colemak -}}
+{"left": "n", "down": "e", "up": "i", "right": "o"}
+{{- else -}}
+{"left": "j", "down": "k", "up": "l", "right": ";"}
+{{- end -}}

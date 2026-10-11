@@ -1,0 +1,44 @@
+{{- /*
+Environment variables shared by zsh and fish. Use as:
+  {{ template "shellenv" (merge (dict "syntax" "fish") .) }}
+Values are written as shell words that mean the same thing in both shells.
+Anything but syntax "fish" emits POSIX exports.
+*/ -}}
+{{- $pager := "'less'" -}}
+{{- if eq .pager "moor" -}}
+{{-   $pager = "'moor'" -}}
+{{- end -}}
+{{- $manpager := "'less -ix8RmPm'" -}}
+{{- if eq .manpager "nvim" -}}
+{{-   $manpager = "'nvim +Man!'" -}}
+{{- else if eq .manpager "manpager" -}}
+{{-   $manpager = "'manpager'" -}}
+{{- end -}}
+{{- $vars := list
+      (list "BAT_STYLE" "'plain'")
+      (list "DELTA_PAGER" "'less -R'")
+      (list "GPG_TTY" "$(tty)")
+      (list "PASSWORD_STORE_DIR" "$XDG_DATA_HOME/pass")
+      (list "GNUPGHOME" "\"$XDG_CONFIG_HOME\"/gnupg")
+      (list "CARGO_INSTALL_ROOT" "$HOME/.local")
+      (list "_ZO_EXCLUDE_DIRS" "\"$HOME:$XDG_CACHE_HOME/*:$ZDOTDIR/plugins/*:$HOME/.mozilla/:*/.git/\"")
+      (list "_ZO_DATA_DIR" "\"$XDG_STATE_HOME/zoxide\"")
+      (list "LESSKEYIN" "\"$XDG_CONFIG_HOME/lesskey\"")
+      (list "LESSHISTFILE" "-")
+      (list "LESS" "'-ix8RmPm'")
+      (list "PAGER" $pager)
+      (list "MANPAGER" $manpager) -}}
+{{- if .editor }}
+{{ if eq .syntax "fish" -}}
+if type -q {{ .editor }}
+    set -gx EDITOR {{ .editor }}
+end
+{{- else -}}
+if command -v {{ .editor }} &> /dev/null; then
+    export EDITOR={{ .editor }}
+fi
+{{- end }}
+{{ end }}
+{{- range $vars }}
+{{ if eq $.syntax "fish" }}set -gx {{ index . 0 }} {{ index . 1 }}{{ else }}export {{ index . 0 }}={{ index . 1 }}{{ end }}
+{{- end }}
