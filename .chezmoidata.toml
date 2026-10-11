@@ -1,6 +1,8 @@
 # Whether to install zsh and neovim plugins
 nvimplugins = false
 zshplugins = false
+# Whether to download tmux plugins (catppuccin theme) and enable them in tmux.conf
+tmuxplugins = false
 # Whether to enable colemak rebinds
 colemak = true
 

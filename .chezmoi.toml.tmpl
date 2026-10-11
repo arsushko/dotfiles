@@ -1,0 +1,44 @@
+{{- /*
+Generated on `chezmoi init`. Options already present in the config are reused
+without prompting; anything missing is asked for when a terminal is attached
+and otherwise left to the defaults in .chezmoidata.toml.
+*/ -}}
+{{- $tty := stdinIsATTY -}}
+{{- $data := dict -}}
+
+{{- if or $tty (hasKey . "shell") -}}
+{{-   $_ := set $data "shell" (promptChoiceOnce . "shell" "Shell" (list "bash" "zsh" "fish") "fish") -}}
+{{- end -}}
+{{- if or $tty (hasKey . "nvimplugins") -}}
+{{-   $_ := set $data "nvimplugins" (promptBoolOnce . "nvimplugins" "Install neovim plugins" false) -}}
+{{- end -}}
+{{- if or $tty (hasKey . "tmuxplugins") -}}
+{{-   $_ := set $data "tmuxplugins" (promptBoolOnce . "tmuxplugins" "Download tmux plugins (catppuccin theme)" false) -}}
+{{- end -}}
+{{- if or $tty (hasKey . "prompthost") -}}
+{{-   $_ := set $data "prompthost" (promptBoolOnce . "prompthost" "Show the hostname in the fish prompt" true) -}}
+{{- end -}}
+{{- if or $tty (hasKey . "manpager") -}}
+{{-   $_ := set $data "manpager" (promptChoiceOnce . "manpager" "Man pager" (list "less" "manpager" "nvim") "less") -}}
+{{- end -}}
+
+{{- if or $tty (hasKey . "graphical") -}}
+{{-   $graphical := promptBoolOnce . "graphical" "Graphical machine" false -}}
+{{-   $_ := set $data "graphical" $graphical -}}
+{{-   if $graphical -}}
+{{-     if or $tty (hasKey . "sway") -}}
+{{-       $_ := set $data "sway" (promptBoolOnce . "sway" "Use sway" false) -}}
+{{-     end -}}
+{{-     if or $tty (hasKey . "term") -}}
+{{-       $_ := set $data "term" (promptChoiceOnce . "term" "Terminal emulator" (list "foot" "ghostty" "alacritty") "foot") -}}
+{{-     end -}}
+{{-     if or $tty (hasKey . "fonts") -}}
+{{-       $_ := set $data "fonts" (promptBoolOnce . "fonts" "Download fonts" false) -}}
+{{-     end -}}
+{{-   end -}}
+{{- end -}}
+
+[data]
+{{- range $k, $v := $data }}
+    {{ $k }} = {{ toToml $v | trim }}
+{{- end }}

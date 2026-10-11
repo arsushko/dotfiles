@@ -1,9 +1,7 @@
 ## Installation
 1. Install chezmoi [somehow](https://www.chezmoi.io/install/)
-2. `chezmoi init arsushko`
-3. `chezmoi cd`
-4. Optionally `cp desktop.toml ~/.config/chezmoi/chezmoi.toml`
-5. `chezmoi apply`
+2. `chezmoi init arsushko` (answer the prompts, or see `.chezmoi.toml.tmpl` for the options)
+3. `chezmoi apply`
 
 ### Installation over SSH
 

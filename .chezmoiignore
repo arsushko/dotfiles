@@ -1,5 +1,4 @@
 README.md
-desktop.toml
 
 {{ if eq .editor "nvim" }}
 .vimrc

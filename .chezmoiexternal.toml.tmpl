@@ -13,3 +13,12 @@
     url = "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/0xProto.tar.xz"
     exact = true
 {{ end }}
+{{ if (eq .tmuxplugins true) }}
+# Pinned to v0.1.0: later releases renamed the options used in tmux.conf
+[".config/tmux/plugins/catppuccin"]
+    type = "archive"
+    url = "https://github.com/catppuccin/tmux/archive/refs/tags/v0.1.0.tar.gz"
+    checksum.sha256 = "7e4aa922ecf6554472cf7dbea7863f5e927d425ada05ae22611f4c854c0a6fef"
+    stripComponents = 1
+    exact = true
+{{ end }}
