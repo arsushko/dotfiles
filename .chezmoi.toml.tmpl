@@ -7,7 +7,7 @@ and otherwise left to the defaults in .chezmoidata.toml.
 {{- $data := dict -}}
 
 {{- if or $tty (hasKey . "shell") -}}
-{{-   $_ := set $data "shell" (promptChoiceOnce . "shell" "Shell" (list "bash" "zsh" "fish") "fish") -}}
+{{-   $_ := set $data "shell" (promptChoiceOnce . "shell" "Shell" (list "bash" "fish") "fish") -}}
 {{- end -}}
 {{- if or $tty (hasKey . "nvimplugins") -}}
 {{-   $_ := set $data "nvimplugins" (promptBoolOnce . "nvimplugins" "Install neovim plugins" false) -}}
@@ -26,9 +26,6 @@ and otherwise left to the defaults in .chezmoidata.toml.
 {{-   $graphical := promptBoolOnce . "graphical" "Graphical machine" false -}}
 {{-   $_ := set $data "graphical" $graphical -}}
 {{-   if $graphical -}}
-{{-     if or $tty (hasKey . "sway") -}}
-{{-       $_ := set $data "sway" (promptBoolOnce . "sway" "Use sway" false) -}}
-{{-     end -}}
 {{-     if or $tty (hasKey . "term") -}}
 {{-       $_ := set $data "term" (promptChoiceOnce . "term" "Terminal emulator" (list "foot" "ghostty" "alacritty") "foot") -}}
 {{-     end -}}

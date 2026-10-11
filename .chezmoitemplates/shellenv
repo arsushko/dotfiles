@@ -1,5 +1,5 @@
 {{- /*
-Environment variables shared by zsh and fish. Use as:
+Environment variables for fish. Use as:
   {{ template "shellenv" (merge (dict "syntax" "fish") .) }}
 Values are written as shell words that mean the same thing in both shells.
 Anything but syntax "fish" emits POSIX exports.
@@ -21,7 +21,7 @@ Anything but syntax "fish" emits POSIX exports.
       (list "PASSWORD_STORE_DIR" "$XDG_DATA_HOME/pass")
       (list "GNUPGHOME" "\"$XDG_CONFIG_HOME\"/gnupg")
       (list "CARGO_INSTALL_ROOT" "$HOME/.local")
-      (list "_ZO_EXCLUDE_DIRS" "\"$HOME:$XDG_CACHE_HOME/*:$ZDOTDIR/plugins/*:$HOME/.mozilla/:*/.git/\"")
+      (list "_ZO_EXCLUDE_DIRS" "\"$HOME:$XDG_CACHE_HOME/*:$HOME/.mozilla/:*/.git/\"")
       (list "_ZO_DATA_DIR" "\"$XDG_STATE_HOME/zoxide\"")
       (list "LESSKEYIN" "\"$XDG_CONFIG_HOME/lesskey\"")
       (list "LESSHISTFILE" "-")

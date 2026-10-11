@@ -27,7 +27,7 @@ set -g __fish_git_prompt_char_upstream_ahead ' ↑'
 set -g __fish_git_prompt_char_upstream_behind ' ↓'
 set -g __fish_git_prompt_char_cleanstate ''
 
-# Colors, matching the old zsh prompt.
+# Colors.
 set -g __fish_git_prompt_color_branch white --bold
 set -g __fish_git_prompt_color_stagedstate green
 set -g __fish_git_prompt_color_dirtystate red

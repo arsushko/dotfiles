@@ -1,6 +1,6 @@
 # vim: ft=fish
 function basic_settings
-    # Shared with zsh, see .chezmoitemplates/shellenv
+    # See .chezmoitemplates/shellenv
     {{ includeTemplate "shellenv" (merge (dict "syntax" "fish") .) | trim | indent 4 | trim }}
 
     # Sets wget to keep history in .local/state

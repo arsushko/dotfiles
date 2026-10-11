@@ -1,17 +1,12 @@
-# Whether to install zsh and neovim plugins
+# Whether to install neovim plugins
 nvimplugins = false
-zshplugins = false
 # Whether to download tmux plugins (catppuccin theme) and enable them in tmux.conf
 tmuxplugins = false
 # Whether to enable colemak rebinds
 colemak = true
 
-# Which shell to use (bash, zsh, or fish)
+# Which shell to use (bash or fish)
 shell = "bash"
-# Whether to enable zsh completion
-zshcomp = false
-# Whether to enable zsh abbeviations
-zshabbr = false
 
 # Whether to show the hostname in the fish prompt
 prompthost = true
@@ -36,14 +31,8 @@ fonts = false
 fontsize = "12"
 # Font to use for terminal emulators
 termfont = "0xProto Nerd Font Mono"
-# Font to use for desktop
-deskfont = "CodeNewRoman Nerd Font Mono"
-# Font to use for everything else
-normfont = "Cantarell"
 
 # Whether to use a desktop
 graphical = false
-# Whether to use sway
-sway = false
 # Which terminal emulator to use
 term = "foot"

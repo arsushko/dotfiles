@@ -9,16 +9,7 @@ README.md
 .config/nvim
 {{ end }}
 
-{{ if eq .shell "zsh" }}
-.config/fish
-.bashrc
-.bash_profile
-{{ else if eq .shell "fish" }}
-.config/zsh
-.zshenv
-{{ else }}
-.config/zsh
-.zshenv
+{{ if ne .shell "fish" }}
 .config/fish
 {{ end }}
 
@@ -27,29 +18,11 @@ README.md
 .config/nvim/lua/lazy-setup.lua
 {{ end }}
 
-{{ if ne .zshcomp true }}
-.config/zsh/modules/completion.zsh
-{{ end }}
-
 {{ if ne .graphical true }}
 .config/zathura/
 .local/share/applications/
-.config/mimeapps.list
-.config/fontconfig
-{{ end }}
-
-{{ if ne .sway true }}
-.config/mimeapps.list
-.config/user-dirs.dirs
-.config/fontconfig/
-.config/fuzzel/
-.config/sway/
-.config/waybar/
-.config/xkb/
-.local/bin/sway/
 {{ end }}
 
 {{ if ne .colemak true }}
-.config/xkb/
 .config/lesskey
 {{ end }}
