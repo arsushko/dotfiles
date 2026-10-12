@@ -4,10 +4,23 @@
 #   host:[dir:branch !status]
 #
 # The host segment is controlled by the prompthost option in .chezmoidata.toml.
-# Root gets a red/magenta frame and no git info; everyone else gets blue/green.
+# Root gets a red/magenta frame and no git info. Users in wheel/sudo get
+# blue/green; users in neither get a dimmed gray/white frame.
 function fish_prompt
     # Must be captured first; any other command overwrites $status.
     set -l last_status $status
+
+    # A process's groups are fixed at startup, so check once per shell instead
+    # of on every prompt. Without wheel/sudo the user can't escalate.
+    if not set -q __prompt_unprivileged
+        set -g __prompt_unprivileged true
+        for group in (string split ' ' (id -Gn))
+            if contains -- $group wheel sudo
+                set __prompt_unprivileged false
+                break
+            end
+        end
+    end
 
     set -l frame_color blue
     set -l path_color green
@@ -16,6 +29,9 @@ function fish_prompt
         set frame_color red
         set path_color magenta
         set is_root true
+    else if $__prompt_unprivileged
+        set frame_color brblack
+        set path_color white
     end
 
     {{ if .prompthost }}
