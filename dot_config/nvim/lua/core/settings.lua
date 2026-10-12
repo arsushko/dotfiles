@@ -10,14 +10,8 @@ vim.cmd([[
     augroup end
 ]])
 
--- Enable syntax highlighting
-vim.g.syntax = true
-
 -- Enables 24-bit colors
 vim.opt.termguicolors = true
-
--- Sets encoding to UTF-8
-vim.opt.encoding = "UTF-8"
 
 -- Folding
 vim.opt.foldmethod = "indent"
@@ -26,14 +20,7 @@ vim.opt.foldmethod = "indent"
 vim.opt.foldenable = false
 
 -- Enables persistent undo
--- FIXME: The if statement doesn't seem to work correctly
 vim.opt.undofile = true
-if(vim.env.XDG_STATE_HOME == nil)
-    then
-    vim.opt.undodir = vim.env.HOME .. "/.local/state/nvim/undo"
-else
-    vim.opt.undodir = vim.env.XDG_STATE_HOME .. "/nvim/undo"
-end
 
 -- Disables swapfiles
 vim.opt.swapfile = false
@@ -67,22 +54,10 @@ vim.opt.completeopt = {
     "noselect"
 }
 
--- Height of the command bar
-vim.opt.cmdheight = 1
-
 -- Case sensitive search only when at least one capital is
 -- present
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-
--- Highlight search results
-vim.opt.hlsearch = true
-
--- Start searching before pressing enter
-vim.opt.incsearch = true
-
--- Make it so vim handles numbers with leading zeroes correctly
-vim.opt.nrformats:remove {"octal"}
 
 -- Enables relative numbers
 vim.opt.relativenumber = true
@@ -95,15 +70,13 @@ vim.cmd([[
     augroup plaintext
         autocmd!
 
-        " Applies to markdown, plaintext, and LATEX
-        autocmd FileType markdown,text,plaintex
+        " Applies to markdown, plaintext, LaTeX, and plain TeX
+        autocmd FileType markdown,text,tex,plaintex
         \ setlocal norelativenumber  " Disables relative numbers
-        autocmd FileType markdown,text,plaintex
+        autocmd FileType markdown,text,tex,plaintex
         \ setlocal wrap              " Enables line wrapping
-        autocmd FileType markdown,text,plaintex
+        autocmd FileType markdown,text,tex,plaintex
         \ setlocal linebreak         " Makes lines break at spaces
-        autocmd FileType markdown,text,plaintex
-        \ setlocal display+=lastline " TODO: What does this do?
 
         " Applies to man and help pages
         autocmd FileType man,help
@@ -114,36 +87,38 @@ vim.cmd([[
     augroup end
 ]])
 
--- Remember position after exiting file
-vim.cmd([[
-    augroup fileposition
-        autocmd!
-        autocmd BufReadPost *
-        \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft =~ 'gitcommit'
-        \ | exe "normal! g'\"" | endif
-    augroup end
-]])
+-- Remember position after exiting file, except in commit and rebase messages.
+-- The filetype isn't detected yet on BufReadPost, so the check waits until
+-- the buffer is shown in a window. See :help last-position-jump
+vim.g.leave_my_cursor_position_alone = 1 -- Disables Gentoo's sysinit.vim version
+vim.api.nvim_create_autocmd("BufReadPost", {
+    group = vim.api.nvim_create_augroup("fileposition", {}),
+    callback = function(args)
+        vim.api.nvim_create_autocmd("BufWinEnter", {
+            buffer = args.buf,
+            once = true,
+            callback = function()
+                local ft = vim.bo[args.buf].filetype
+                if ft:find("commit") or ft == "gitrebase" or ft == "xxd" then
+                    return
+                end
+                local line = vim.api.nvim_buf_get_mark(args.buf, '"')[1]
+                if line > 1 and line <= vim.api.nvim_buf_line_count(args.buf) then
+                    vim.cmd('normal! g`"')
+                end
+            end,
+        })
+    end,
+})
 
 -- Auto yank to clipboard
 vim.opt.clipboard="unnamedplus"
-
--- Sets the number of lines of history that will be stored
-vim.opt.history = 50
 
 -- Show matching brackets when text indicator is over them
 vim.opt.showmatch = true
 
 -- How many tenths of a second to blink when matching brackets
 vim.opt.matchtime = 2
-
--- Allows backspace to delete everything
-vim.opt.backspace = {
-    "eol",
-    "start",
-    "indent"
-}
-
-vim.opt.wrap = false
 
 -- Don't redraw while executing macros; improves performance
 vim.opt.lazyredraw = true

@@ -28,6 +28,11 @@ if !has('nvim') | set viminfofile=$XDG_STATE_HOME/vim/viminfo | endif
 
 let mapleader = "\<Space>"
 
+" Like noremap, but only in Normal, Visual and Operator-pending modes. noremap
+" also covers Select mode, where typed keys should replace the selection.
+" No spaces around |, as :map would include them in the mapping
+command! -nargs=+ Noremap nnoremap <args>|xnoremap <args>|onoremap <args>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -102,14 +107,14 @@ set relativenumber
 augroup plaintext
     autocmd!
 
-    " Applies to markdown, plaintext, and LATEX
-    autocmd FileType markdown,text,plaintex
+    " Applies to markdown, plaintext, LaTeX, and plain TeX
+    autocmd FileType markdown,text,tex,plaintex
     \ setlocal norelativenumber  " Disables relative numbers
-    autocmd FileType markdown,text,plaintex
+    autocmd FileType markdown,text,tex,plaintex
     \ setlocal wrap              " Enables line wrapping
-    autocmd FileType markdown,text,plaintex
+    autocmd FileType markdown,text,tex,plaintex
     \ setlocal linebreak         " Makes lines break at spaces
-    autocmd FileType markdown,text,plaintex
+    autocmd FileType markdown,text,tex,plaintex
     \ setlocal display+=lastline " TODO: What does this do?
 
     " Applies to man and help pages
@@ -120,12 +125,16 @@ augroup plaintext
     \ nnoremap <buffer> q :q!<CR>
 augroup end
 
-" Remember position after exiting file
+" Remember position after exiting file, except in commit and rebase messages.
+" `syntax on` above enables filetype detection first, so &ft is already set.
+" See :help last-position-jump
+let g:leave_my_cursor_position_alone = 1 " Disables Gentoo's system vimrc version
 augroup fileposition
     autocmd!
     autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft =~ 'gitcommit'
-    \ | exe "normal! g'\"" | endif
+    \ if line("'\"") > 1 && line("'\"") <= line("$")
+    \     && &ft !~# 'commit' && index(['xxd', 'gitrebase'], &ft) == -1
+    \ | exe "normal! g`\"" | endif
 augroup end
 
 " Auto yank to clipboard
@@ -180,96 +189,84 @@ let g:loaded_netrwPlugin = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Movement keys rebound to neio
-noremap n h
-noremap e j
-noremap i k
-noremap o l
-noremap ge gj
-noremap gi gk
+Noremap n h
+Noremap e j
+Noremap i k
+Noremap o l
+Noremap ge gj
+Noremap gi gk
 
 " Insert mode now bound to l
-noremap l i
-noremap L I
-noremap gl gi
+Noremap l i
+Noremap L I
+Noremap gl gi
 
 " Search result navigation with k
-noremap k n
-noremap K N
+Noremap k n
+Noremap K N
 " Search forward/backward and select
-noremap gk gn
-noremap gK gN
-noremap gn <nop>
-noremap gN <nop>
-noremap go <nop>
-noremap gO <nop>
+Noremap gk gn
+Noremap gK gN
+Noremap gn <nop>
+Noremap gN <nop>
+Noremap go <nop>
+Noremap gO <nop>
 
 " Moving to top/bottom of screen
-noremap N L
-noremap O H
+Noremap N L
+Noremap O H
 
 " Insert mode with newline is now on h
-noremap h o
-noremap H O
+Noremap h o
+Noremap H O
+
+" E and I function like PageUp/Down
+Noremap E <C-f>
+Noremap I <C-b>
 
 " Lower case j joins lines
-noremap - J
+Noremap - J
 
 " j moves to end of word
-noremap j e
-noremap J E
-
-" Hack to work around conflict with `d`elete `i`n
-nnoremap yi yk
-nnoremap vi vk
-nnoremap di dk
-nnoremap ci ck
-nnoremap dd dd
+Noremap j e
+Noremap J E
 
 " Easy window switching
-noremap <leader>n :wincmd h<CR>
-noremap <leader>e :wincmd j<CR>
-noremap <leader>i :wincmd k<CR>
-noremap <leader>o :wincmd l<CR>
+nnoremap <leader>n <Cmd>wincmd h<CR>
+nnoremap <leader>e <Cmd>wincmd j<CR>
+nnoremap <leader>i <Cmd>wincmd k<CR>
+nnoremap <leader>o <Cmd>wincmd l<CR>
 
-" Creating newline without insert mode
-noremap <C-k> o<Esc>o
-noremap <C-S-K> O<Esc>O
+" Ctrl + k opens a line below with a blank line in between, like starting a
+" new paragraph. Ctrl + Shift + k does the same above
+nnoremap <C-k> o<Esc>o
+nnoremap <C-S-K> O<Esc>O
 
 " Movement between previous motions
-noremap <C-H> <C-O>
-noremap <C-S-H> <C-I>
+Noremap <C-H> <C-O>
+Noremap <C-S-H> <C-I>
 {{ end }}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Custom mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" W and B move to beginning/end of word inclusive
-noremap W e
-noremap B gE
-
-" E and I function like PageUp/Down
-noremap E <C-f>
-noremap I <C-b>
-
 " Leader-action to delete without copying
-noremap <leader>x "_x
-noremap <leader>X "_X
-vnoremap <leader>x "_x
+Noremap <leader>x "_x
+Noremap <leader>X "_X
 
-noremap <leader>s "_s
-noremap <leader>S "_S
-vnoremap <leader>s "_s
+Noremap <leader>s "_s
+Noremap <leader>S "_S
 
-noremap <leader>c "_c
-noremap <leader>C "_C
-vnoremap <leader>c "_c
+Noremap <leader>c "_c
+Noremap <leader>C "_C
 
-noremap <leader>d "_d
-noremap <leader>D "_D
-vnoremap <leader>d "_d
+Noremap <leader>d "_d
+Noremap <leader>D "_D
 
-" Enter clears toggles highlighting
-noremap <silent> <CR> :set hlsearch!<CR>
+" Enter toggles search highlighting, except in quickfix lists and the
+" command-line window, where it opens the entry or runs the command
+nnoremap <expr> <CR> &buftype ==# 'quickfix' \|\| getcmdwintype() !=# ''
+    \ ? "\<CR>" : "\<Cmd>set hlsearch!\<CR>"
 
 " Toggles line numbers
 nnoremap <silent> <leader>ln :set number!<CR>
@@ -281,17 +278,6 @@ nnoremap <silent> <leader>lf :set relativenumber!<CR>:set number!<CR>
 " Leader + h allows highlighting `l`ine or `c`olumn
 nnoremap <silent> <leader>hl :set cursorline!<CR>
 nnoremap <silent> <leader>hc :set cursorcolumn!<CR>
-
-" Disables the arrow keys
-noremap <Left> <nop>
-noremap <Down> <nop>
-noremap <Up> <nop>
-noremap <Right> <nop>
-
-inoremap <Left> <nop>
-inoremap <Down> <nop>
-inoremap <Up> <nop>
-inoremap <Right> <nop>
 
 " Disables Ctrl + w in insert mode
 inoremap <C-w> <nop>

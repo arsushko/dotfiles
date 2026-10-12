@@ -25,4 +25,5 @@ README.md
 
 {{ if ne .colemak true }}
 .config/lesskey
+.config/nvim/lua/core/colemak.lua
 {{ end }}

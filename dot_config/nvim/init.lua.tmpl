@@ -1,5 +1,8 @@
 require("core.settings")
 require("core.keymaps")
+{{ if (eq .colemak true) }}
+require("core.colemak")
+{{ end }}
 require("core.statusline")
 {{ if (eq .nvimplugins true) }}
 require("lazy-setup")

@@ -7,38 +7,42 @@
 -- https://github.com/amix/vimrc
 ---------------------------------------------------------------
 
--- This function tracks the word count, used for statusline
--- Taken from: https://vim.fandom.com/wiki/Word_count
-vim.cmd([[
-    let g:word_count=wordcount().words
-    function WordCount()
-        if has_key(wordcount(),'visual_words')
-            let g:word_count=wordcount().visual_words."/".wordcount().words " count selected words
-        else
-            let g:word_count=wordcount().cursor_words."/".wordcount().words " or shows words 'so far'
-        endif
-        return g:word_count
-    endfunction
-]])
+local M = {}
 
--- https://vi.stackexchange.com/questions/36876/see-live-word-count-in-lualine
-local function getWords()
-    return tostring(vim.fn.wordcount().words)
+-- Filetypes that get a word count in the status line
+local prose = { markdown = true, text = true, tex = true, plaintex = true }
+
+-- Shows words selected or words "so far", out of the total
+-- Based on: https://vim.fandom.com/wiki/Word_count
+function M.words()
+    if not prose[vim.bo.filetype] then
+        return ""
+    end
+    local count = vim.fn.wordcount()
+    return (" w:%s/%s  "):format(count.visual_words or count.cursor_words, count.words)
 end
 
 -- Always show the status line
 vim.opt.laststatus=2
 
--- Colors for status line
-vim.cmd([[
-    highlight User1 guifg=#CE933B guibg=#333333
-    highlight User2 guifg=#76CE3B guibg=#333333
-    highlight User3 guifg=#933BCE guibg=#333333
-    highlight User4 guifg=#EA5031 guibg=#333333
-    highlight User5 guifg=#F2E863 guibg=#333333
-    highlight User6 guifg=#CCCCCC guibg=#333333
-    highlight User7 guifg=#FFFFFF guibg=#333333
-]])
+-- Colors for status line. Loading a colorscheme clears them, so they are
+-- set again after each one
+local function set_colors()
+    vim.cmd([[
+        highlight User1 guifg=#CE933B guibg=#333333
+        highlight User2 guifg=#76CE3B guibg=#333333
+        highlight User3 guifg=#933BCE guibg=#333333
+        highlight User4 guifg=#EA5031 guibg=#333333
+        highlight User5 guifg=#F2E863 guibg=#333333
+        highlight User6 guifg=#CCCCCC guibg=#333333
+        highlight User7 guifg=#FFFFFF guibg=#333333
+    ]])
+end
+set_colors()
+vim.api.nvim_create_autocmd("ColorScheme", {
+    group = vim.api.nvim_create_augroup("statusline", {}),
+    callback = set_colors,
+})
 
 vim.opt.statusline = table.concat({
     -- Buffer number
@@ -56,14 +60,9 @@ vim.opt.statusline = table.concat({
     -- Row number/Number of rows
     "%5*%l%6*/%1*%L",
     -- Percentage of location
-    "%7*%6p%%  "
+    "%7*%6p%%  ",
+    -- Word count, only in prose filetypes
+    "%{v:lua.require'core.statusline'.words()}",
 })
 
--- If inside a plaintext file, add word count to status line
-vim.cmd([[
-    augroup statusline
-    autocmd!
-    autocmd FileType markdown,text,plaintex
-        \ set statusline+=\ w:%{WordCount()}\ \ 
-    augroup end
-]])
+return M

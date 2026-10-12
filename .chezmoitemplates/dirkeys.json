@@ -2,9 +2,12 @@
 Home row direction keys as JSON. Use as:
   {{ $k := includeTemplate "dirkeys.json" . | fromJson }}
   {{ $k.left }} {{ $k.down }} {{ $k.up }} {{ $k.right }}
+The characters typed with Shift held are under shift, e.g. {{ $k.shift.left }}
 */ -}}
 {{- if .colemak -}}
-{"left": "n", "down": "e", "up": "i", "right": "o"}
+{"left": "n", "down": "e", "up": "i", "right": "o",
+ "shift": {"left": "N", "down": "E", "up": "I", "right": "O"}}
 {{- else -}}
-{"left": "j", "down": "k", "up": "l", "right": ";"}
+{"left": "j", "down": "k", "up": "l", "right": ";",
+ "shift": {"left": "J", "down": "K", "up": "L", "right": ":"}}
 {{- end -}}

@@ -1,8 +1,7 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
-if not vim.loop.fs_stat(lazypath) then
-    vim.g.disableplugins = 1
-    vim.fn.system({
+if not vim.uv.fs_stat(lazypath) then
+    local out = vim.fn.system({
         "git",
         "clone",
         "--filter=blob:none",
@@ -10,6 +9,14 @@ if not vim.loop.fs_stat(lazypath) then
         "--branch=stable",
         lazypath,
     })
+    -- Starts without plugins rather than failing on require("lazy")
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { out, "WarningMsg" },
+        }, true, {})
+        return
+    end
 end
 vim.opt.rtp:prepend(lazypath)
 

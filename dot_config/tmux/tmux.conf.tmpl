@@ -68,20 +68,21 @@ bind-key K split-window -v
 bind-key h split-window -h -c "#{pane_current_path}"
 bind-key H split-window -h
 
+{{ $k := includeTemplate "dirkeys.json" . | fromJson -}}
+# Alt + direction keys. The keys are quoted because tmux reads an unquoted ;
+# (the right key without colemak) as a command separator
+
 # Pane switching
-# https://github.com/christoomey/vim-tmux-navigator
-is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
-    | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?vim?x?|fzf)(diff)?$'"
-bind-key -n 'M-n' if-shell "$is_vim" 'send-keys M-n'  'select-pane -L'
-bind-key -n 'M-e' if-shell "$is_vim" 'send-keys M-e'  'select-pane -D'
-bind-key -n 'M-i' if-shell "$is_vim" 'send-keys M-i'  'select-pane -U'
-bind-key -n 'M-o' if-shell "$is_vim" 'send-keys M-o'  'select-pane -R'
+bind-key -n "M-{{ $k.left }}" select-pane -L
+bind-key -n "M-{{ $k.down }}" select-pane -D
+bind-key -n "M-{{ $k.up }}" select-pane -U
+bind-key -n "M-{{ $k.right }}" select-pane -R
 
 # Pane resizing
-bind-key -r M-N resize-pane -L 2
-bind-key -r M-E resize-pane -D 2
-bind-key -r M-I resize-pane -U 2
-bind-key -r M-O resize-pane -R 2
+bind-key -r "M-{{ $k.shift.left }}" resize-pane -L 2
+bind-key -r "M-{{ $k.shift.down }}" resize-pane -D 2
+bind-key -r "M-{{ $k.shift.up }}" resize-pane -U 2
+bind-key -r "M-{{ $k.shift.right }}" resize-pane -R 2
 
 # Closing a pane
 unbind-key x
@@ -114,8 +115,8 @@ bind-key C new-window
 # Switch to last window
 bind-key t last-window
 
-bind-key -n M-N previous-window
-bind-key -n M-O next-window
+bind-key -n "M-{{ $k.shift.left }}" previous-window
+bind-key -n "M-{{ $k.shift.right }}" next-window
 
 # Closing a window
 bind-key w killw
@@ -130,21 +131,21 @@ setw -g mode-keys vi
 # Unbind-key copy mode bindings
 unbind-key -T copy-mode-vi Space;
 unbind-key -T copy-mode-vi Enter;
-
+{{ if (eq .colemak true) }}
 # Vim-like copy mode movement
-bind-key -T copy-mode-vi n send-keys -X cursor-left
-bind-key -T copy-mode-vi e send-keys -X cursor-down
-bind-key -T copy-mode-vi i send-keys -X cursor-up
-bind-key -T copy-mode-vi o send-keys -X cursor-right
+bind-key -T copy-mode-vi {{ $k.left }} send-keys -X cursor-left
+bind-key -T copy-mode-vi {{ $k.down }} send-keys -X cursor-down
+bind-key -T copy-mode-vi {{ $k.up }} send-keys -X cursor-up
+bind-key -T copy-mode-vi {{ $k.right }} send-keys -X cursor-right
 
 # Upper case E/I scroll down/up whole page
-bind-key -T copy-mode-vi E send-keys -X page-down
-bind-key -T copy-mode-vi I send-keys -X page-up
+bind-key -T copy-mode-vi {{ $k.shift.down }} send-keys -X page-down
+bind-key -T copy-mode-vi {{ $k.shift.up }} send-keys -X page-up
 
 # k for searching forward/backward
 bind-key -T copy-mode-vi k send-keys -X search-again
 bind-key -T copy-mode-vi K send-keys -X search-reverse
-
+{{ end }}
 # Selection with v and block select with Ctrl + v, yank with y
 bind-key -T copy-mode-vi 'v' send-keys -X begin-selection
 bind-key -T copy-mode-vi 'C-v' send -X begin-selection \; send -X rectangle-toggle

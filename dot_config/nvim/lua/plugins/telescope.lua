@@ -10,7 +10,14 @@ return {
     },
     opts = {
         defaults = {
-            file_ignore_patterns = { "node%_modules/*", ".yarn/*", ".git/*", ".idea/*" },
+            -- Lua patterns; each directory is matched at the start of the
+            -- path or after a slash, as paths can be relative or absolute
+            file_ignore_patterns = {
+                "^node_modules/", "/node_modules/",
+                "^%.yarn/", "/%.yarn/",
+                "^%.git/", "/%.git/",
+                "^%.idea/", "/%.idea/",
+            },
         },
         pickers = {
             find_files = {
