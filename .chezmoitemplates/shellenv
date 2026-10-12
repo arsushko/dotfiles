@@ -1,8 +1,6 @@
 {{- /*
 Environment variables for fish. Use as:
-  {{ template "shellenv" (merge (dict "syntax" "fish") .) }}
-Values are written as shell words that mean the same thing in both shells.
-Anything but syntax "fish" emits POSIX exports.
+  {{ includeTemplate "shellenv" . }}
 */ -}}
 {{- $pager := "'less'" -}}
 {{- if eq .pager "moor" -}}
@@ -29,16 +27,10 @@ Anything but syntax "fish" emits POSIX exports.
       (list "PAGER" $pager)
       (list "MANPAGER" $manpager) -}}
 {{- if .editor }}
-{{ if eq .syntax "fish" -}}
 if type -q {{ .editor }}
     set -gx EDITOR {{ .editor }}
 end
-{{- else -}}
-if command -v {{ .editor }} &> /dev/null; then
-    export EDITOR={{ .editor }}
-fi
-{{- end }}
 {{ end }}
 {{- range $vars }}
-{{ if eq $.syntax "fish" }}set -gx {{ index . 0 }} {{ index . 1 }}{{ else }}export {{ index . 0 }}={{ index . 1 }}{{ end }}
+set -gx {{ index . 0 }} {{ index . 1 }}
 {{- end }}

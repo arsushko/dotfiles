@@ -1,7 +1,7 @@
 # vim: ft=fish
 function basic_settings
     # See .chezmoitemplates/shellenv
-    {{ includeTemplate "shellenv" (merge (dict "syntax" "fish") .) | trim | indent 4 | trim }}
+    {{ includeTemplate "shellenv" . | trim | indent 4 | trim }}
 
     # Sets wget to keep history in .local/state
     alias wget "wget --hsts-file $XDG_STATE_HOME/wget-hsts"
