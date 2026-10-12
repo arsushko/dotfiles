@@ -108,8 +108,9 @@ vim.cmd([[
         " Applies to man and help pages
         autocmd FileType man,help
         \ setlocal scrolloff=99999    " Always centers screen
+        " Rebinds q to quit
         autocmd FileType man,help
-        \ nnoremap <buffer> q :q!<CR> " Rebinds q to quit
+        \ nnoremap <buffer> q :q!<CR>
     augroup end
 ]])
 
