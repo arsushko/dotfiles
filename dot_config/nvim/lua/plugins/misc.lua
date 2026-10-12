@@ -1,3 +1,3 @@
 return {
-    { "gentoo/gentoo-syntax"},
+    { "gentoo/gentoo-syntax", version = "^17" },
 }

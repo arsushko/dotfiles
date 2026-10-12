@@ -1,6 +1,7 @@
 return {
     "catppuccin/nvim",
     name = "catppuccin",
+    version = "^2",
     opts = {
         term_colors = true,
         transparent_background = true,

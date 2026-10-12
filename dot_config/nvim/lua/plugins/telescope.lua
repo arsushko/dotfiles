@@ -1,6 +1,10 @@
 return {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    version = "^0.2",
+    dependencies = {
+        -- Unmaintained upstream, so pinned to its last commit
+        { "nvim-lua/plenary.nvim", commit = "74b06c6" },
+    },
     keys = {
         { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find Files" },
         { "<leader>ft", "<cmd>Telescope live_grep<CR>", desc = "Find a string" },
