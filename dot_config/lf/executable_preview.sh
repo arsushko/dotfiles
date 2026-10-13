@@ -2,27 +2,52 @@
 # Necessary for bat, for some reason I don't remember.
 unset COLORTERM
 
-mime_type=$(file --brief --mime-type "$1")
+has() { command -v "$1" >/dev/null 2>&1; }
+
+# Fallback: just show file description
+info() {
+    if has file; then
+        file --brief "$1"
+    else
+        ls -lh "$1"
+    fi
+}
+
+text() {
+    if has bat; then
+        bat --color=always "$1"
+    elif has batcat; then  # Debian/Ubuntu name
+        batcat --color=always "$1"
+    else
+        cat "$1"
+    fi
+}
+
+if has file; then
+    mime_type=$(file --brief --mime-type "$1")
+elif grep -qI . "$1"; then  # No file(1): grep -I treats binaries as non-matching
+    mime_type=text/plain
+fi
 
 case "$mime_type" in
     application/x-tar|application/gzip|application/x-bzip2|application/x-xz)
-        tar tf "$1";;
+        has tar && tar tf "$1" || info "$1";;
     application/zip)
-        unzip -l "$1";;
+        has unzip && unzip -l "$1" || info "$1";;
     application/vnd.rar)
-        unrar l "$1";;
+        has unrar && unrar l "$1" || info "$1";;
     application/x-7z-compressed)
-        7z l "$1";;
+        has 7z && 7z l "$1" || info "$1";;
     application/x-bittorrent)
-        transmission-show "$1";;
+        has transmission-show && transmission-show "$1" || info "$1";;
     image/*)
-        chafa --format=symbols --size="${2}x${3}" "$1";;
+        has chafa && chafa --format=symbols --size="${2}x${3}" "$1" || info "$1";;
     video/*|audio/*)
-        mediainfo "$1";;
+        has mediainfo && mediainfo "$1" || info "$1";;
     application/pdf)
-        pdfinfo "$1";;
+        has pdfinfo && pdfinfo "$1" || info "$1";;
     text/*|application/json|application/xml|application/javascript)
-        bat --color=always "$1";;
+        text "$1";;
     *)
-        file --brief "$1";;  # Fallback: just show file description
+        info "$1";;
 esac

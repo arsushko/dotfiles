@@ -1,3 +1,4 @@
+# chezmoi:template:left-delimiter="#{" right-delimiter="}}"
 # Integrates elements of
 #   https://github.com/thezeroalpha/dotfiles/blob/master/lf/lfrc
 #   https://github.com/BrodieRobertson/dotfiles/blob/master/config/lf/lfrc
@@ -115,7 +116,7 @@ map k search-next
 map K search-next
 #{ end }}
 
-set previewer "/home/aleksei/.config/lf/preview.sh"
+set previewer "#{ .chezmoi.homeDir }}/.config/lf/preview.sh"
 
 # Creates a new file and opens it in editor
 cmd newfile ${{
